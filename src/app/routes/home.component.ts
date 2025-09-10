@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
     rows = this.gameMap.length;
     cols = this.gameMap[0].length;
     selectedCell: Cell = { row: 0, col: 0 };
+    
     keyDict = {
         ArrowUp: false,
         ArrowDown: false,
@@ -31,7 +32,7 @@ export class HomeComponent implements OnInit {
     private keydownHandler = this.updateKeyDict.bind(this);
     private keyupHandler = this.updateKeyDict.bind(this);
     private frameCounter = 0;
-    private moveInterval = 12;
+    private moveInterval = 16;
 
 
     constructor() { }
@@ -82,19 +83,14 @@ export class HomeComponent implements OnInit {
     // }
 
     updateKeyDict(event: any) {
-        console.log(event.type, event.code);
         const k = event.code;
         if(/^Arrow\w+/.test(k)){
-            console.log("setting keyDict")
             event.preventDefault();
             this.keyDict[k as keyof typeof this.keyDict] = event.type === 'keydown';
         }
     }
 
     update(){
-        // let dist = 
-        // this.keyDict.ArrowUp && (this.keyDict.ArrowLeft || this.keyDict.ArrowRight) ||
-        // this.keyDict.ArrowDown && (this.keyDict.ArrowLeft || this.keyDict.ArrowRight) ? 1 : 1;
         this.frameCounter++;
         if(this.frameCounter % this.moveInterval !== 0) return;
         let dist = 1;

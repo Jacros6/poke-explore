@@ -1,14 +1,17 @@
-<table>
-    <tr *ngFor="let row of [].constructor(rows); let i = index">
-        <td *ngFor="let col of [].constructor(cols); let j = index">
-            <input 
-                type="radio" 
-                name="grid" 
-                [id]="'item' + i + '_' + j"
-                [checked]="selectedCell.row === i && selectedCell.col === j"
-                (change)="cellChange($event, i, j)"
-            />
-            <label [for]="'item' + i + '_' + j"></label>
-        </td>
-    </tr>
-</table>
+<div class="map-container">
+    <img src="assets/johto-kanto-large.png" alt="Game Map" class="map-image" />
+    <table>
+        <tr *ngFor="let row of [].constructor(rows); let i = index">
+            <td *ngFor="let col of [].constructor(cols); let j = index">
+                <input 
+                    type="radio" 
+                    name="grid" 
+                    [id]="'item' + i + '_' + j"
+                    [checked]="selectedCell.row === i && selectedCell.col === j"
+                    (change)="cellChange($event, i, j)"
+                />
+                <label [for]="'item' + i + '_' + j"></label>
+            </td>
+        </tr>
+    </table>
+</div>
