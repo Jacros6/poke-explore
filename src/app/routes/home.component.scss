@@ -1,0 +1,17 @@
+td {
+    border:1px solid;padding:0px;
+}
+td input[type="radio"] {
+    position:absolute;
+	left:-9999px;
+}
+td label {
+    background-color:#333; 
+    padding:8px;
+    display:block;
+    color:#fff;
+    font-family:arial;
+}
+td input:checked + label {
+    background-color:#669900
+}
