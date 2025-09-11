@@ -1,34 +1,85 @@
-td {
-    outline:1px solid;padding:0px;
-}
-td input[type="radio"] {
-    position:absolute;
-	left:-9999px;
-}
-td label {
-    background-color:#333; 
-    padding:8px;
-    display:block;
-    color:#fff;
-    font-family:arial;
-
-}
-td input:checked + label {
-    background-color:#669900
-}
-
-table{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-spacing: 0px;
-    
-}
-
 .map-container {
   position: relative;
-  display: inline-block;
-  line-height: 0;
+  display: inline-block; 
+}
+
+.map-image {
+  display: block;
+  height: auto;
+  z-index: 1;
+  width: auto;  
+  height: auto;     
+  max-width: none; 
+}
+
+.map-grid {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 1), 1fr);
+  grid-template-rows:    repeat(var(--rows, 1), 1fr);
+  pointer-events: none;    
+  top: 3.8px;
+  left: 3.5px;
+  width: calc(100% - 7px);  
+  height: calc(100% - 3.8px);
+}
+
+
+.grid-cell {
+  position: relative;
+  pointer-events: auto;    
+  overflow: visible;
+}
+
+.grid-cell input[type="radio"] {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+
+.cell-label {
+  position: absolute;
+  inset: 0;                
+  display: block;
+  box-sizing: border-box;
+  cursor: pointer;
+  user-select: none;
+
+}
+
+.grid-cell input[type="radio"]:checked + .cell-label {
+  outline: 6px solid rgb(247, 247, 247);
+  animation: scaleUp 0.5s infinite steps(1, start);
+  inset: 0px;
+  content: "";
+  z-index: 9999;
+  
+}
+.grid-cell input[type="radio"]:checked + .cell-label::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 4px solid rgb(231, 57, 57);
+  box-sizing: border-box;
+}
+
+.grid-cell input[type="radio"]:checked + .cell-label::before {
+  content: "";
+  position: absolute;
+  inset: 0px;
+  border: 2px solid rgb(247, 247, 247);
+  box-sizing: border-box;
+}
+
+@keyframes scaleUp {
+  0%, 100% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
