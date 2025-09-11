@@ -7,9 +7,9 @@
   </div>
 
   <div class="map-container" [class.active]="overlayActive">
-      <button (click)="overlayActive = !overlayActive" class="toggle-overlay-btn">
-    {{ overlayActive ? 'Hide Map' : 'Show Map' }}
-  </button>
+    <button (click)="overlayActive = !overlayActive" class="toggle-overlay-btn">
+      {{ overlayActive ? 'Hide Map' : 'Show Map' }}
+    </button>
     <div class="map-inner">
     <img src="assets/johto-kanto-x4.jpg" alt="Game Map" class="map-image" />
       <div class="map-grid" [attr.style]="'--rows:' + rows + '; --cols:' + cols + ';'">

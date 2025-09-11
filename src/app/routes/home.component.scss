@@ -1,29 +1,8 @@
 .wrapper {
   display: flex;
   flex-direction: column; 
-  align-items: center;   
-  height: 100vh;           
+  align-items: center;           
 }
-
-// .map-container {
-//   position: relative;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background: rgba(0, 0, 0, 0.2); /* semi-transparent overlay */
-//   opacity: 0;
-//   transform: translateY(100%); /* start hidden below */
-//   transition: transform 0.4s ease, opacity 0.4s ease;
-//   pointer-events: none; 
-//   width: fit-content;
-// }
-
-// .map-container.active {
-//   opacity: 1;
-//   transform: translateY(0); /* slide up */
-//   pointer-events: auto; /* enable interaction */
-// }
 
 .map-container {
   position: fixed;                 
@@ -64,12 +43,14 @@
   height: auto;
 }
 
-
 .toggle-overlay-btn {
   margin-top: 1em;
   padding: 0.5em 1em;
   cursor: pointer;
   z-index: 6;
+  position: fixed;
+  top: -5%;
+  right: 15%;
 }
 
 .image-container {
@@ -78,17 +59,15 @@
 
 }
 
-/* Frame behind the icon */
 .image-container::before {
   content: "";
   position: absolute;
   top: 50%;
   left: 50%;
-
   transform: translate(-50%, -50%);
-  border: 3px solid red;  /* frame color and thickness */
-  border-radius: 50%;      /* circular frame */
-  z-index: 0;              /* behind the icon */
+  border: 3px solid red;
+  border-radius: 50%;    
+  z-index: 0;           
 }
 
 .location-image {
@@ -185,17 +164,16 @@
 }
 
 .background-wrapper {
-  position: fixed; /* stays locked to screen */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1; /* stays behind everything */
+  z-index: -1;
   overflow: hidden;
 }
 
 .background-img {
   width: 100%;
   height: 100%;
-   /* fills screen while preserving aspect ratio */
 }
