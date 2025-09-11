@@ -1,19 +1,34 @@
-<div class="map-container">
-  <img src="assets/johto-kanto-x4.jpg" alt="Game Map" class="map-image" />
-  <div class="map-grid" [attr.style]="'--rows:' + rows + '; --cols:' + cols + ';'">
-    <ng-container *ngFor="let r of [].constructor(rows); let i = index">
-      <ng-container *ngFor="let c of [].constructor(cols); let j = index">
-        <div class="grid-cell">
-          <input
-            type="radio"
-            name="grid"
-            [id]="'item' + i + '_' + j"
-            [checked]="selectedCell.row === i && selectedCell.col === j"
-            (change)="cellChange($event, i, j)"
-          />
-          <label class="cell-label" [for]="'item' + i + '_' + j"></label>
-        </div>
-      </ng-container>
-    </ng-container>
+<div class="background-wrapper">
+  <img src="assets/background-1-large.jpg" alt="Background Image" class="background-img" />
+</div>
+<div class="wrapper">
+  <div class="image-container">
+    <img src="assets/location_1.png" alt="Location Icon" class="location-image" />
   </div>
+
+  <div class="map-container" [class.active]="overlayActive">
+      <button (click)="overlayActive = !overlayActive" class="toggle-overlay-btn">
+    {{ overlayActive ? 'Hide Map' : 'Show Map' }}
+  </button>
+    <div class="map-inner">
+    <img src="assets/johto-kanto-x4.jpg" alt="Game Map" class="map-image" />
+      <div class="map-grid" [attr.style]="'--rows:' + rows + '; --cols:' + cols + ';'">
+        <ng-container *ngFor="let r of [].constructor(rows); let i = index">
+          <ng-container *ngFor="let c of [].constructor(cols); let j = index">
+            <div class="grid-cell">
+              <input
+                type="radio"
+                name="grid"
+                [id]="'item' + i + '_' + j"
+                [checked]="selectedCell.row === i && selectedCell.col === j"
+                (change)="cellChange($event, i, j)"
+              />
+              <label  [class.inactive]="!overlayActive" class="cell-label" [for]="'item' + i + '_' + j"></label>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
 </div>

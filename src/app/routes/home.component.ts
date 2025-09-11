@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
     rows = this.gameMap.length;
     cols = this.gameMap[0].length;
     selectedCell: Cell = { row: 0, col: 0 };
+    overlayActive = false;
     
     keyDict = {
         ArrowUp: false,

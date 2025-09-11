@@ -1,6 +1,102 @@
+.wrapper {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;   
+  height: 100vh;           
+}
+
+// .map-container {
+//   position: relative;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background: rgba(0, 0, 0, 0.2); /* semi-transparent overlay */
+//   opacity: 0;
+//   transform: translateY(100%); /* start hidden below */
+//   transition: transform 0.4s ease, opacity 0.4s ease;
+//   pointer-events: none; 
+//   width: fit-content;
+// }
+
+// .map-container.active {
+//   opacity: 1;
+//   transform: translateY(0); /* slide up */
+//   pointer-events: auto; /* enable interaction */
+// }
+
 .map-container {
+  position: fixed;                 
+  bottom: 0;
+  left: 50%;                     
+  transform: translate(-50%, calc(100% - 60px));
+  transition: transform 420ms cubic-bezier(.22,.9,.32,1), opacity 280ms ease;      
+  z-index: 5;
+
+  display: inline-block;          
+  background: rgba(0,0,0,0.08);  
+  overflow: visible;            
+  background: #1e1e1e;   
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+  justify-content: center;
+  display: flex;
+  padding: 2em;
+}
+
+
+.map-container.active {
+  transform: translate(-50%, 0);
+  pointer-events: auto;            /* allow clicks */
+}
+
+.map-container .map-inner {
   position: relative;
-  display: inline-block; 
+  display: inline-block;           /* keep width = image width */
+  vertical-align: top;
+}
+
+.map-container .map-image {
+  display: block;
+  width: auto;                     /* let the image keep native width unless constrained */
+  max-width: calc(100vw - 48px);   /* never exceed viewport minus some padding */
+  height: auto;
+}
+
+
+.toggle-overlay-btn {
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  z-index: 6;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+
+}
+
+/* Frame behind the icon */
+.image-container::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+  border: 3px solid red;  /* frame color and thickness */
+  border-radius: 50%;      /* circular frame */
+  z-index: 0;              /* behind the icon */
+}
+
+.location-image {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .map-image {
@@ -19,10 +115,10 @@
   grid-template-columns: repeat(var(--cols, 1), 1fr);
   grid-template-rows:    repeat(var(--rows, 1), 1fr);
   pointer-events: none;    
-  top: 3.8px;
-  left: 3.5px;
+  top: 4px;
+  left: 3.8px;
   width: calc(100% - 7px);  
-  height: calc(100% - 3.8px);
+  height: calc(100% - 4px);
 }
 
 
@@ -48,7 +144,11 @@
   box-sizing: border-box;
   cursor: pointer;
   user-select: none;
+}
 
+.cell-label.inactive{
+  cursor: default;
+  pointer-events: none;
 }
 
 .grid-cell input[type="radio"]:checked + .cell-label {
@@ -82,4 +182,20 @@
   50% {
     transform: scale(1.1);
   }
+}
+
+.background-wrapper {
+  position: fixed; /* stays locked to screen */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* stays behind everything */
+  overflow: hidden;
+}
+
+.background-img {
+  width: 100%;
+  height: 100%;
+   /* fills screen while preserving aspect ratio */
 }
