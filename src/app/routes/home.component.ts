@@ -54,35 +54,6 @@ export class HomeComponent implements OnInit {
         requestAnimationFrame(this.engine.bind(this));
     }
 
-    // @HostListener('window:keydown', ['$event'])
-    // handleKeyDown(event: KeyboardEvent) {
-    //     if(!this.selectedCell) return;
-
-    //     let {row, col} = this.selectedCell;
-    //     switch(event.key) {
-    //         case 'ArrowUp':
-    //             row = Math.max(0, row - 1);
-    //             event.preventDefault();
-    //             break;
-    //         case 'ArrowDown':
-    //             row = Math.min(this.rows - 1, row + 1);
-    //             event.preventDefault();
-    //             break;
-    //         case 'ArrowLeft':
-    //             col = Math.max(0, col - 1);
-    //             event.preventDefault();
-    //             break;
-    //         case 'ArrowRight':
-    //             col = Math.min(this.cols - 1, col + 1);
-    //             event.preventDefault();
-    //             break;
-    //         default:
-    //             return;
-    //     }
-    //     this.selectedCell = { row, col };
-
-    // }
-
     updateKeyDict(event: any) {
         const k = event.code;
         if(/^Arrow\w+/.test(k)){
