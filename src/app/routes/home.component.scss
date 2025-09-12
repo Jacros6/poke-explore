@@ -23,13 +23,17 @@
   display: inline-block;          
   background: rgba(0,0,0,0.08);  
   overflow: visible;            
-  background: #1e1e1e;   
+  background: rgb(82, 82, 90);   
+  outline: 8px solid rgb(74,66,66);
+  border-top: 4px solid rgb(239, 165, 57);
   width: 100%;
   height: auto;
   min-height: 200px;
   justify-content: center;
   display: flex;
   padding: 2em;
+    filter: drop-shadow(0px 12px 24px rgba(0, 0, 0, 0.85))
+        drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.6));
 }
 
 
@@ -197,8 +201,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;   /* scales the overlay with the image */
-  pointer-events: none;  /* clicks pass through */
-  image-rendering: pixelated; /* keep pixel-art crisp */
+  object-fit: contain; 
+  pointer-events: none;  
+  image-rendering: pixelated; 
   z-index: 2;
+  filter: drop-shadow(0px 12px 24px rgba(0, 0, 0, 0.85))
+        drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.6));
 }
