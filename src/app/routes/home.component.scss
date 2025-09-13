@@ -66,6 +66,16 @@
   right: 15%;
 }
 
+.make-guess-btn {
+  margin: 0;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  z-index: 6;
+  position: absolute;  
+  top: 2.5%;          
+  left: 1%;            
+}
+
 .image-container {
   position: relative;
   display: inline-block;
@@ -169,6 +179,15 @@
   inset: 0px;
   border: 2px solid rgb(247, 247, 247);
   box-sizing: border-box;
+}
+
+.grid-cell input[type="radio"]:checked + .cell-label.disabled {
+  animation: none !important;
+  pointer-events: none;
+}
+
+.map-grid.disabled {
+  pointer-events: none;
 }
 
 @keyframes scaleUp {

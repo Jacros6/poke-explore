@@ -14,27 +14,34 @@
     <button (click)="overlayActive = !overlayActive" class="toggle-overlay-btn">
       {{ overlayActive ? 'Hide Map' : 'Show Map' }}
     </button>
-    
-
+      
     <div class="map-inner">
-    <img src="assets/johto-kanto-x4.jpg" alt="Game Map" class="map-image" />
-      <div class="map-grid" [attr.style]="'--rows:' + rows + '; --cols:' + cols + ';'">
-        <ng-container *ngFor="let r of [].constructor(rows); let i = index">
-          <ng-container *ngFor="let c of [].constructor(cols); let j = index">
-            <div class="grid-cell">
-              <input
-                type="radio"
-                name="grid"
-                [id]="'item' + i + '_' + j"
-                [checked]="selectedCell.row === i && selectedCell.col === j"
-                (change)="cellChange($event, i, j)"
-              />
-              <label  [class.inactive]="!overlayActive" class="cell-label" [for]="'item' + i + '_' + j"></label>
-            </div>
+      <button class="make-guess-btn" (click)="makeGuess()">Make Guess</button>
+      <img src="assets/johto-kanto-x4.jpg" alt="Game Map" class="map-image" />
+        <div class="map-grid" [attr.style]="'--rows:' + rows + '; --cols:' + cols + ';'">
+          <ng-container *ngFor="let r of [].constructor(rows); let i = index">
+            <ng-container *ngFor="let c of [].constructor(cols); let j = index">
+              <div class="grid-cell">
+                <input
+                  type="radio"
+                  name="grid"
+                  [id]="'item' + i + '_' + j"
+                  [checked]="selectedCell.row === i && selectedCell.col === j"
+                  (change)="cellChange($event, i, j)"
+                  [disabled]="madeGuess"
+                />
+                <label 
+                [class.inactive]="!overlayActive" 
+                class="cell-label" 
+                [for]="'item' + i + '_' + j"
+                [class.disabled]="madeGuess"
+
+                ></label>
+              </div>
+            </ng-container>
           </ng-container>
-        </ng-container>
+        </div>
       </div>
-    </div>
   </div>
 
 </div>

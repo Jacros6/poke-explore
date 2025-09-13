@@ -21,8 +21,10 @@ export class HomeComponent implements OnInit {
     gameMap = GAME_MAP;
     rows = this.gameMap.length;
     cols = this.gameMap[0].length;
-    selectedCell: Cell = { row: 0, col: 0 };
+    selectedCell: Cell = { row: Math.floor(this.rows / 2), col: Math.floor(this.cols/2) };
+    resultCell: Cell = { row: 10, col: 1 };
     overlayActive = false;
+    madeGuess = false;
     
     keyDict = {
         ArrowUp: false,
@@ -55,6 +57,7 @@ export class HomeComponent implements OnInit {
     }
 
     updateKeyDict(event: any) {
+        
         const k = event.code;
         if(/^Arrow\w+/.test(k)){
             event.preventDefault();
@@ -62,15 +65,34 @@ export class HomeComponent implements OnInit {
         }
     }
 
+    makeGuess(){
+        if (this.madeGuess) return;
+
+        const { row: selectedRow, col: selectedCol } = this.selectedCell;
+        const { row: resultRow, col: resultCol } = this.resultCell;
+        this.madeGuess = true;
+        if (selectedRow === resultRow && selectedCol === resultCol) {
+            console.log("🎉 Correct guess!");
+            return 0;
+        }
+
+        const rowDiff = Math.abs(resultRow - selectedRow);
+        const colDiff = Math.abs(resultCol - selectedCol);
+        console.log(Math.max(rowDiff, colDiff));
+        
+        return Math.max(rowDiff, colDiff);
+    }
+
     update(){
+        if(this.madeGuess) return;
         this.frameCounter++;
         if(this.frameCounter % this.moveInterval !== 0) return;
         let dist = 1;
 
-        if(this.keyDict.ArrowLeft) this.selectedCell.col -= dist;
-        if(this.keyDict.ArrowRight) this.selectedCell.col += dist;
-        if(this.keyDict.ArrowUp) this.selectedCell.row -= dist;
-        if(this.keyDict.ArrowDown) this.selectedCell.row += dist;
+        if(this.keyDict.ArrowLeft && this.selectedCell.col > 0) this.selectedCell.col -= dist;
+        if(this.keyDict.ArrowRight && this.selectedCell.col < this.cols - 1) this.selectedCell.col += dist;
+        if(this.keyDict.ArrowUp && this.selectedCell.row > 0) this.selectedCell.row -= dist;
+        if(this.keyDict.ArrowDown && this.selectedCell.row < this.rows - 1) this.selectedCell.row += dist;
     }   
 }
 
