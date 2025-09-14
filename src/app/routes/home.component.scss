@@ -163,8 +163,8 @@
   inset: 0px;
   content: "";
   z-index: 9999;
-  
 }
+
 .grid-cell input[type="radio"]:checked + .cell-label::after {
   content: "";
   position: absolute;
@@ -181,9 +181,16 @@
   box-sizing: border-box;
 }
 
+.grid-cell.reveal {
+  background: rgba(57, 231, 57, 0.35);
+  outline: 3px solid rgb(57, 231, 57); 
+  border-radius: 2px;
+}
+
 .grid-cell input[type="radio"]:checked + .cell-label.disabled {
   animation: none !important;
   pointer-events: none;
+  scale: 1.1;
 }
 
 .map-grid.disabled {

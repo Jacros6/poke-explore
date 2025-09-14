@@ -51,6 +51,13 @@ export class HomeComponent implements OnInit {
         this.selectedCell = { row, col };
     }
 
+    nextRound(){
+        this.madeGuess = false;
+        this.selectedCell = { row: Math.floor(this.rows / 2), col: Math.floor(this.cols/2) };
+        this.overlayActive = false;
+        //Additional Next Round logic here
+    }
+
     engine(){
         this.update();
         requestAnimationFrame(this.engine.bind(this));

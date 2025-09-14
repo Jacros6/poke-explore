@@ -6,7 +6,7 @@
   </div>
 
   <div class="image-container">
-    <img src="assets/location_1.png" alt="Location Icon" class="location-image" />
+    <img src="https://storage.googleapis.com/location-images-ss_hg/location_8.png" alt="Location Icon" class="location-image" />
     <img src="/assets/border-full-transparent.png" class="border-overlay" />
   </div>
 
@@ -16,12 +16,20 @@
     </button>
       
     <div class="map-inner">
-      <button class="make-guess-btn" (click)="makeGuess()">Make Guess</button>
+      @if(!madeGuess){
+        <button class="make-guess-btn" (click)="makeGuess()" [disabled]="!overlayActive">Make Guess</button>
+      }
+      @else {
+        <button class="make-guess-btn" (click)="nextRound()" [disabled]="!overlayActive">Next Round</button>
+      }
       <img src="assets/johto-kanto-x4.jpg" alt="Game Map" class="map-image" />
         <div class="map-grid" [attr.style]="'--rows:' + rows + '; --cols:' + cols + ';'">
           <ng-container *ngFor="let r of [].constructor(rows); let i = index">
             <ng-container *ngFor="let c of [].constructor(cols); let j = index">
-              <div class="grid-cell">
+              <div 
+                class="grid-cell"
+                [class.reveal]="madeGuess && resultCell.row === i && resultCell.col === j"
+              >
                 <input
                   type="radio"
                   name="grid"
@@ -29,13 +37,13 @@
                   [checked]="selectedCell.row === i && selectedCell.col === j"
                   (change)="cellChange($event, i, j)"
                   [disabled]="madeGuess"
+                  
                 />
                 <label 
-                [class.inactive]="!overlayActive" 
-                class="cell-label" 
-                [for]="'item' + i + '_' + j"
-                [class.disabled]="madeGuess"
-
+                  [class.inactive]="!overlayActive" 
+                  class="cell-label" 
+                  [for]="'item' + i + '_' + j"
+                  [class.disabled]="madeGuess"
                 ></label>
               </div>
             </ng-container>
