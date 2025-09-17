@@ -44,6 +44,7 @@
                   class="cell-label" 
                   [for]="'item' + i + '_' + j"
                   [class.disabled]="madeGuess"
+                  [attr.data-coords]="i + ',' + j"
                 ></label>
               </div>
             </ng-container>
