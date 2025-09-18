@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { GAME_MAP } from '../../assets/game-map';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { GameService } from '../services/game.service';
 
 export interface Cell {
     row: number;
@@ -22,9 +23,11 @@ export class HomeComponent implements OnInit {
     rows = this.gameMap.length;
     cols = this.gameMap[0].length;
     selectedCell: Cell = { row: Math.floor(this.rows / 2), col: Math.floor(this.cols/2) };
-    resultCell: Cell = { row: 10, col: 1 };
+    highlightedCells: Cell[] = [];
+    resultCell: Cell | null = null;
     overlayActive = false;
     madeGuess = false;
+    image_url: string | null = null;
     
     keyDict = {
         ArrowUp: false,
@@ -38,12 +41,28 @@ export class HomeComponent implements OnInit {
     private moveInterval = 16;
 
 
-    constructor() { }
+    constructor(private readonly gameService: GameService) { 
+        
+    }
 
     ngOnInit() {
         document.addEventListener('keydown', this.keydownHandler);
         document.addEventListener('keyup', this.keyupHandler);
         this.engine();
+        this.gameService.startGame().subscribe((res: any) => {
+            localStorage.setItem("poke-explore-token", res.token);
+            this.image_url = res.image_url
+        })
+    }
+
+    getNextLocation(){
+        const token = localStorage.getItem("poke-explore-token");
+        if(!token){
+            console.error("No game token found");
+            return;
+        }
+
+        this.gameService
     }
 
     cellChange(event: any, row: number, col: number) {
@@ -73,21 +92,36 @@ export class HomeComponent implements OnInit {
     }
 
     makeGuess(){
-        if (this.madeGuess) return;
+        // if (this.madeGuess) return;
+        if(this.madeGuess) return;
 
-        const { row: selectedRow, col: selectedCol } = this.selectedCell;
-        const { row: resultRow, col: resultCol } = this.resultCell;
-        this.madeGuess = true;
-        if (selectedRow === resultRow && selectedCol === resultCol) {
-            console.log("🎉 Correct guess!");
-            return 0;
-        }
+        const token = localStorage.getItem("poke-explore-token") as string;
 
-        const rowDiff = Math.abs(resultRow - selectedRow);
-        const colDiff = Math.abs(resultCol - selectedCol);
-        console.log(Math.max(rowDiff, colDiff));
-        
-        return Math.max(rowDiff, colDiff);
+        this.gameService.makeGuess(token, this.selectedCell).subscribe((result: any) => {
+            console.log(result)
+            this.madeGuess = true;
+            this.resultCell = result.actualLocation.coordinates;
+            if(!this.resultCell){
+                return;
+            }
+            this.highlightedCells = [];
+            for(let i = 0; i < this.rows; i++){
+                for(let j = 0; j < this.cols; j++){
+                    const dist = Math.max(
+                        Math.abs(i - this.resultCell.row),
+                        Math.abs(j - this.resultCell.col)
+                    );
+                    if(dist <= result.distance){
+                        this.highlightedCells.push({row: i, col: j});
+                    }
+                }
+            }
+            console.log(this.highlightedCells)
+        })
+    }
+
+    isHighlighted(i: number, j: number): boolean {
+        return this.highlightedCells.some(cell => cell.row === i && cell.col === j);
     }
 
     update(){

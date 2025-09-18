@@ -184,7 +184,11 @@
 .grid-cell.reveal {
   background: rgba(57, 231, 57, 0.35);
   outline: 3px solid rgb(57, 231, 57); 
-  border-radius: 2px;
+}
+
+.grid-cell.highlight{
+  background: rgba(231, 57, 57, 0.35);
+  outline: 3px solid rgb(231, 57, 57);
 }
 
 .grid-cell input[type="radio"]:checked + .cell-label.disabled {

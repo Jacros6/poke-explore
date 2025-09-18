@@ -6,7 +6,7 @@
   </div>
 
   <div class="image-container">
-    <img src="https://storage.googleapis.com/location-images-ss_hg/location_8.png" alt="Location Icon" class="location-image" />
+    <img [src]="image_url" alt="Location Icon" class="location-image" />
     <img src="/assets/border-full-transparent.png" class="border-overlay" />
   </div>
 
@@ -28,7 +28,8 @@
             <ng-container *ngFor="let c of [].constructor(cols); let j = index">
               <div 
                 class="grid-cell"
-                [class.reveal]="madeGuess && resultCell.row === i && resultCell.col === j"
+                [class.reveal]="madeGuess && resultCell?.row === i && resultCell?.col === j"
+                [class.highlight]="isHighlighted(i, j)"
               >
                 <input
                   type="radio"
