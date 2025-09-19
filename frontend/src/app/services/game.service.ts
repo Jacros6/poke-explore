@@ -10,8 +10,8 @@ export class GameService {
         return this.http.post("http://localhost:3000/game/start-game", {});
     }
 
-    nextLocation(){
-        
+    nextLocation(token: string){
+        return this.http.post("http://localhost:3000/game/next-location", {token});
     }
 
     makeGuess(token: string, guessed_location: {row: number, col: number}){

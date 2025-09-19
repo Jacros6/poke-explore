@@ -181,15 +181,31 @@
   box-sizing: border-box;
 }
 
-.grid-cell.reveal {
-  background: rgba(57, 231, 57, 0.35);
-  outline: 3px solid rgb(57, 231, 57); 
+
+.grid-cell.highlight-green {
+  background: rgba(0, 200, 0, 0.35);
+}
+.grid-cell.highlight-yellow {
+  background: rgba(255, 255, 0, 0.35);
+}
+.grid-cell.highlight-red {
+  background: rgba(231, 57, 57, 0.35);
 }
 
-.grid-cell.highlight{
-  background: rgba(231, 57, 57, 0.35);
-  outline: 3px solid rgb(231, 57, 57);
-}
+.grid-cell.highlight-green.border-top    { border-top: 3px solid green; }
+.grid-cell.highlight-green.border-bottom { border-bottom: 3px solid green; }
+.grid-cell.highlight-green.border-left   { border-left: 3px solid green; }
+.grid-cell.highlight-green.border-right  { border-right: 3px solid green; }
+
+.grid-cell.highlight-yellow.border-top    { border-top: 3px solid goldenrod; }
+.grid-cell.highlight-yellow.border-bottom { border-bottom: 3px solid goldenrod; }
+.grid-cell.highlight-yellow.border-left   { border-left: 3px solid goldenrod; }
+.grid-cell.highlight-yellow.border-right  { border-right: 3px solid goldenrod; }
+
+.grid-cell.highlight-red.border-top    { border-top: 3px solid rgb(231, 57, 57); }
+.grid-cell.highlight-red.border-bottom { border-bottom: 3px solid rgb(231, 57, 57); }
+.grid-cell.highlight-red.border-left   { border-left: 3px solid rgb(231, 57, 57); }
+.grid-cell.highlight-red.border-right  { border-right: 3px solid rgb(231, 57, 57); }
 
 .grid-cell input[type="radio"]:checked + .cell-label.disabled {
   animation: none !important;

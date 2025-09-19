@@ -30,6 +30,7 @@
                 class="grid-cell"
                 [class.reveal]="madeGuess && resultCell?.row === i && resultCell?.col === j"
                 [class.highlight]="isHighlighted(i, j)"
+                [ngClass]="getBorderClasses(i, j)"
               >
                 <input
                   type="radio"

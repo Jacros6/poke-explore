@@ -8,12 +8,8 @@ import { gridDistance } from "../utils/locationUtils";
 
 const router = Router();
 const TOLERANCE_DISTANCE = 1;
-/**
- * Start a new game
- */
+
 router.post("/start-game", async (req, res) => {
-
-
   const { oldToken } = req.body || {};
 
   let usedIds: number[] = [];
@@ -22,7 +18,6 @@ router.post("/start-game", async (req, res) => {
       const payload = decodeGameToken(oldToken);
       usedIds = payload.usedIds || [];
     } catch {
-      // Invalid token, ignore and start fresh
       usedIds = [];
     }
   }
@@ -33,13 +28,13 @@ router.post("/start-game", async (req, res) => {
   }
 
   const randomLoc = locations[Math.floor(Math.random() * locations.length)];
+  const decodedToken = decodeGameToken(oldToken);
 
-  // Initial game token payload
   const payload = {
-    userId:oldToken ? decodeGameToken(oldToken).userId : randomUUID(),
+    userId:oldToken ? decodedToken.userId : randomUUID(),
     usedIds: [...usedIds, randomLoc.id],
-    score: oldToken ? decodeGameToken(oldToken).score : 0,
-    lives: oldToken ? decodeGameToken(oldToken).lives : 3,
+    score: oldToken ? decodedToken.score : 0,
+    lives: oldToken ? decodedToken.lives : 3,
     currentRoundId: randomLoc.id
   };
 
@@ -64,12 +59,15 @@ router.post("/make-guess", tokenMiddleware, async(req, res) => {
     }
 
     const result_location = await getLocationById(payload.currentRoundId);
+
     const distance = gridDistance(
         result_location.coordinates.row,
         result_location.coordinates.col,
         guessed_location.row,
         guessed_location.col
     )
+
+
 
     const isCorrect = distance <= TOLERANCE_DISTANCE;
 
@@ -98,36 +96,36 @@ router.post("/make-guess", tokenMiddleware, async(req, res) => {
     })
 })
 
-/**
- * Get next Pokémon / location
- */
-// router.post("/next-pokemon", tokenMiddleware, (req, res) => {
-//   const { token } = req.body;
+router.post("/next-location", tokenMiddleware, async (req, res) => {
+  const { token } = req.body;
 
-//   if (!token) return res.status(400).send("Token required");
+  if (!token) return res.status(400).send("Token required");
 
-//   const payload = decodeGameToken(token);
+  let usedIds: number[] = [];
+  let payload = decodeGameToken(token);
+  usedIds = payload.usedIds;
 
-//   // Filter out already used locations
-//   const unusedLocations = locations.filter(l => !payload.usedIds.includes(l.id));
+  const locations = await getRandomLocation(usedIds);
+  if (!locations.length) {
+    return res.status(404).send("No locations left");
+  }
 
-//   if (unusedLocations.length === 0) {
-//     return res.status(404).send("No Pokémon left");
-//   }
+  const randomLoc = locations[Math.floor(Math.random() * locations.length)];
 
-//   // Pick a random unused location
-//   const nextLoc = unusedLocations[Math.floor(Math.random() * unusedLocations.length)];
+  payload = {
+    userId: payload.userId,
+    usedIds: [...usedIds, randomLoc.id],
+    score: payload.score,
+    lives: payload.lives,
+    currentRoundId: randomLoc.id
+  };
 
-//   // Update payload
-//   payload.usedIds.push(nextLoc.id);
-//   payload.currentRoundId = nextLoc.id;
+  const updatedToken = createGameToken(payload);
+  res.json({
+    token: updatedToken,
+    image_url: randomLoc.image_url
+  })
 
-//   const updatedToken = createGameToken(payload);
-
-//   res.json({
-//     updatedToken,
-//     imageUrl: nextLoc.imageUrl
-//   });
-// });
+});
 
 export default router;
