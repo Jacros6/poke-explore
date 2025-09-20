@@ -289,7 +289,7 @@ export const LOCATION_DATA_SS_HG: Record<number, {name: string, description: str
     58: {
         name: "Route 4",
         description: "A one-way road down a hill that has a gentle slope and is fun to traverse.",
-        tiles: [{row: 4, col: 36}, {row: 4, col: 38}]
+        tiles: [{row: 4, col: 36}, {row: 4, col: 38}, {row: 4, col: 37}]
     },
     59: {
         name: "Cerulean City",
@@ -333,7 +333,7 @@ export const LOCATION_DATA_SS_HG: Record<number, {name: string, description: str
     },
     67: {
         name: "Route 8",
-        description: "A short road that elads to the blocked-off Underground Path.",
+        description: "A short road that leads to the blocked-off Underground Path.",
         tiles: [{row: 8, col: 42}, {row: 8, col: 41}]
     },
     68: {

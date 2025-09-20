@@ -3,6 +3,7 @@ import { GAME_MAP } from '../../assets/game-map';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GameService } from '../services/game.service';
+import { LOCATION_DATA_SS_HG } from '../../assets/location-data-ss_hg';
 
 export interface Cell {
     row: number;
@@ -29,6 +30,7 @@ export class HomeComponent implements OnInit {
     madeGuess = false;
     image_url: string | null = null;
     radius: number | null = null;
+    selectedLocation: any;
     
     keyDict = {
         ArrowUp: false,
@@ -70,9 +72,31 @@ export class HomeComponent implements OnInit {
         })
     }
 
+    updateLocation(row: number, col: number){
+        const location = Object.values(LOCATION_DATA_SS_HG).find(loc => 
+            loc.tiles.some(tile => tile.row === row && tile.col === col)
+        );
+
+        if(location){
+            this.selectedLocation = { 
+                name: location.name, 
+                description: location.description, 
+                coordinates: {
+                    row: this.selectedCell.row,
+                    col: this.selectedCell.col
+                }
+            }
+        }
+        else{
+            this.selectedLocation = null;
+        }
+    }
+
     cellChange(event: any, row: number, col: number) {
         console.log(event, row, col);
         this.selectedCell = { row, col };
+
+        // this.updateLocation(row, col);
     }
 
     nextRound(){
@@ -170,6 +194,8 @@ export class HomeComponent implements OnInit {
         if(this.keyDict.ArrowRight && this.selectedCell.col < this.cols - 1) this.selectedCell.col += dist;
         if(this.keyDict.ArrowUp && this.selectedCell.row > 0) this.selectedCell.row -= dist;
         if(this.keyDict.ArrowDown && this.selectedCell.row < this.rows - 1) this.selectedCell.row += dist;
+
+        this.updateLocation(this.selectedCell.row, this.selectedCell.col);
     }   
 }
 

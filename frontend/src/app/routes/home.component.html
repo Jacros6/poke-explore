@@ -14,7 +14,7 @@
     <button (click)="overlayActive = !overlayActive" class="toggle-overlay-btn">
       {{ overlayActive ? 'Hide Map' : 'Show Map' }}
     </button>
-      
+
     <div class="map-inner">
       @if(!madeGuess){
         <button class="make-guess-btn" (click)="makeGuess()" [disabled]="!overlayActive">Make Guess</button>
@@ -52,6 +52,13 @@
             </ng-container>
           </ng-container>
         </div>
+            @if(selectedLocation){
+            <div class="location-info">
+              <h2>{{ selectedLocation.name }}</h2>
+              <p>{{ selectedLocation.description }}</p>
+              <p>row: {{selectedLocation.coordinates.row}} col: {{selectedLocation.coordinates.col}}</p>
+            </div>
+          }
       </div>
   </div>
 

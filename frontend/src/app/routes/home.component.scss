@@ -70,10 +70,19 @@
   margin: 0;
   padding: 0.5em 1em;
   cursor: pointer;
-  z-index: 6;
+  z-index: 8;
   position: absolute;  
   top: 2.5%;          
   left: 1%;            
+}
+
+.location-info{
+  margin: 0;
+  padding: 0.5em 1em;
+  z-index: 6;
+  position: absolute;
+  bottom: 2.5%;
+  left: 1%;
 }
 
 .image-container {
@@ -116,7 +125,7 @@
 
 .map-grid {
   position: absolute;
-  z-index: 2;
+  z-index: 7;
   display: grid;
   grid-template-columns: repeat(var(--cols, 1), 1fr);
   grid-template-rows:    repeat(var(--rows, 1), 1fr);
