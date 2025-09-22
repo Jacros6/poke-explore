@@ -39,19 +39,19 @@
 
 .map-container.active {
   transform: translate(-50%, 0);
-  pointer-events: auto;            /* allow clicks */
+  pointer-events: auto;          
 }
 
 .map-container .map-inner {
   position: relative;
-  display: inline-block;           /* keep width = image width */
+  display: inline-block;      
   vertical-align: top;
 }
 
 .map-container .map-image {
   display: block;
-  width: auto;                     /* let the image keep native width unless constrained */
-  max-width: calc(100vw - 48px);   /* never exceed viewport minus some padding */
+  width: auto;                    
+  max-width: calc(100vw - 48px); 
   height: auto;
   width: 100%;
 }
@@ -72,17 +72,67 @@
   cursor: pointer;
   z-index: 8;
   position: absolute;  
-  top: 2.5%;          
-  left: 1%;            
+  top: 2%;          
+  right: 1%;            
+  background: linear-gradient(
+    to bottom,
+    rgb(41, 140, 231) 0%,    /* white at top */
+    rgb(41, 140, 231) 50%,   /* white extends to 40% */
+    rgb(16, 90, 214) 50%,   /* gray starts at 40% */
+    rgb(16, 90, 214) 60%,   /* gray extends to 70% */
+    rgb(0, 49, 198) 60%,      /* dark gray starts at 70% */
+    rgb(0, 49, 198) 100%      /* dark gray until bottom */
+  );
 }
 
-.location-info{
-  margin: 0;
-  padding: 0.5em 1em;
-  z-index: 6;
+.location-card {
   position: absolute;
-  bottom: 2.5%;
+  top: 2%;
   left: 1%;
+  z-index: 5;
+  width: 25%;
+  padding: 8px;
+  max-width: 425px;
+  display: inline-block;
+  background-color: white;
+  // background: linear-gradient(
+  //   to bottom,
+  //   rgb(41, 140, 231) 0%,    /* white at top */
+  //   rgb(41, 140, 231) 50%,   /* white extends to 40% */
+  //   rgb(16, 90, 214) 50%,   /* gray starts at 40% */
+  //   rgb(16, 90, 214) 60%,   /* gray extends to 70% */
+  //   rgb(0, 49, 198) 60%,      /* dark gray starts at 70% */
+  //   rgb(0, 49, 198) 100%      /* dark gray until bottom */
+  // );
+    background: linear-gradient(
+    to bottom,
+    rgb(231, 231, 231) 0%,    /* white at top */
+    rgb(231, 231, 231) 50%,   /* white extends to 40% */
+    rgb(214, 214, 214) 50%,   /* gray starts at 40% */
+    rgb(214, 214, 214) 60%,   /* gray extends to 70% */
+    rgb(198, 198, 198) 60%,      /* dark gray starts at 70% */
+    rgb(198, 198, 198) 100%      /* dark gray until bottom */
+  );
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.location-info {
+  width: 100%;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+}
+
+.location-info h2 {
+  font-size: 18px;
+  margin: 0 0 0.2em 0;
+  padding-bottom: 0.2em;
+}
+
+.location-details p {
+  margin: 0.2em 0;
+  font-size: 14px;
 }
 
 .image-container {
@@ -192,7 +242,7 @@
 
 
 .grid-cell.highlight-green {
-  background: rgba(0, 200, 0, 0.35);
+  background: rgba(0, 200, 0, 0.748);
 }
 .grid-cell.highlight-yellow {
   background: rgba(255, 255, 0, 0.35);
@@ -262,4 +312,108 @@
   z-index: 2;
   filter: drop-shadow(0px 12px 24px rgba(0, 0, 0, 0.85))
         drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.6));
+}
+
+.pixel-corners,
+.pixel-corners--wrapper {
+  clip-path: polygon(0px calc(100% - 4px),
+    2px calc(100% - 4px),
+    2px calc(100% - 2px),
+    4px calc(100% - 2px),
+    4px 100%,
+    calc(100% - 4px) 100%,
+    calc(100% - 4px) calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 4px),
+    100% calc(100% - 4px),
+    100% 4px,
+    calc(100% - 2px) 4px,
+    calc(100% - 2px) 2px,
+    calc(100% - 4px) 2px,
+    calc(100% - 4px) 0px,
+    4px 0px,
+    4px 2px,
+    2px 2px,
+    2px 4px,
+    0px 4px);
+  position: absolute;
+}
+.pixel-corners {
+  border: 4px solid transparent;
+}
+.pixel-corners--wrapper {
+  width: fit-content;
+  height: fit-content;
+}
+.pixel-corners--wrapper .pixel-corners {
+  display: block;
+  clip-path: polygon(4px 6px,
+    6px 6px,
+    6px 4px,
+    calc(100% - 6px) 4px,
+    calc(100% - 6px) 6px,
+    calc(100% - 4px) 6px,
+    calc(100% - 4px) calc(100% - 6px),
+    calc(100% - 6px) calc(100% - 6px),
+    calc(100% - 6px) calc(100% - 4px),
+    6px calc(100% - 4px),
+    6px calc(100% - 6px),
+    4px calc(100% - 6px));
+}
+.pixel-corners::after,
+.pixel-corners--wrapper::after {
+  content: "";
+  position: absolute;
+  clip-path: polygon(0px calc(100% - 4px),
+    2px calc(100% - 4px),
+    2px calc(100% - 2px),
+    4px calc(100% - 2px),
+    4px 100%,
+    calc(100% - 4px) 100%,
+    calc(100% - 4px) calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 4px),
+    100% calc(100% - 4px),
+    100% 4px,
+    calc(100% - 2px) 4px,
+    calc(100% - 2px) 2px,
+    calc(100% - 4px) 2px,
+    calc(100% - 4px) 0px,
+    4px 0px,
+    4px 2px,
+    2px 2px,
+    2px 4px,
+    0px 4px,
+    0px 50%,
+    4px 50%,
+    4px 6px,
+    6px 6px,
+    6px 4px,
+    calc(100% - 6px) 4px,
+    calc(100% - 6px) 6px,
+    calc(100% - 4px) 6px,
+    calc(100% - 4px) calc(100% - 6px),
+    calc(100% - 6px) calc(100% - 6px),
+    calc(100% - 6px) calc(100% - 4px),
+    6px calc(100% - 4px),
+    6px calc(100% - 6px),
+    4px calc(100% - 6px),
+    4px 50%,
+    0px 50%);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgb(48,48,48);
+  display: block;
+  pointer-events: none;
+}
+.pixel-corners::after {
+  margin: -4px;
+}
+
+.hgss-text-button{
+  font-size: 22px;
+  color: rgb(255, 255, 255);
+  text-shadow: 1.5px 1.5px 0px rgb(41, 41, 41);
 }

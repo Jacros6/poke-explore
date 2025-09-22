@@ -38,7 +38,7 @@ export const LOCATION_DATA_SS_HG: Record<number, {name: string, description: str
     },
     8: {
         name: "Olivine City",
-        description: "A city where you can hear the melody ofo the sea.",
+        description: "A city where you can hear the melody of the sea.",
         tiles: [{row: 9, col: 7}, {row: 9, col:8}, {row: 8, col: 7}, {row: 8, col:8}]
     },
     9: {
@@ -163,7 +163,7 @@ export const LOCATION_DATA_SS_HG: Record<number, {name: string, description: str
     },
     33: {
         name: "Azalea Town",
-        description: "A town where people and Pokémon live together in simple harmony.",
+        description: "A town where people and Pokemon live together in simple harmony.",
         tiles: [{row: 15, col: 11}, {row: 10, col: 12}]
     },
     34: {
@@ -178,7 +178,7 @@ export const LOCATION_DATA_SS_HG: Record<number, {name: string, description: str
     },
     36: {
         name: "Goldenrod City",
-        description: "A developing city where people and Pokémon come and go as they like.",
+        description: "A developing city where people and Pokemon come and go as they like.",
         tiles: [{row: 12, col: 10}, {row: 12, col: 9}, {row: 12, col: 8}, {row: 11, col: 8}, {row: 11, col: 9}, {row:11, col:10}]
     },
     37: {
@@ -188,7 +188,7 @@ export const LOCATION_DATA_SS_HG: Record<number, {name: string, description: str
     },
     38: {
         name: "National Park",
-        description: "A spacious and beautiful park. It's connected to the Pokéathlon Dome.",
+        description: "A spacious and beautiful park. It's connected to the Pokeathlon Dome.",
         tiles: [{row: 8, col: 10}, {row: 8, col: 9}, {row: 7, col: 9}, {row: 7, col: 10}]
     },
     39: {
@@ -218,7 +218,7 @@ export const LOCATION_DATA_SS_HG: Record<number, {name: string, description: str
     },
     44: {
         name: "Victory Road",
-        description: "A road that tests Trainers aiming at the Pokémon League",
+        description: "A road that tests Trainers aiming at the Pokemon League",
         tiles: [{row: 9, col: 27}, {row: 8, col: 27}]
     },
     45: {
@@ -263,7 +263,7 @@ export const LOCATION_DATA_SS_HG: Record<number, {name: string, description: str
     },
     53: {
         name: "Viridian Forest",
-        description: "A forest filled with Nature and Bug-type Pokémon.",
+        description: "A forest filled with Nature and Bug-type Pokemon.",
         tiles: [{row: 6, col: 31}]
     },
     54: {
@@ -353,7 +353,7 @@ export const LOCATION_DATA_SS_HG: Record<number, {name: string, description: str
     },
     71: {
         name: "Celadon City",
-        description: "A rich, rainbow-colored city where people and Pokémon gather.",
+        description: "A rich, rainbow-colored city where people and Pokemon gather.",
         tiles: [{row: 8, col: 37}, {row: 8, col: 36}, {row: 9, col: 36}, {row: 9, col: 37}]
     },
     72: {

@@ -18,3 +18,18 @@ body{
   transform: scale(1);  
   transform-origin: top left;
 }
+
+@font-face{
+  font-family: "PokemonHGSS";
+  src: url("./assets/fonts/PKMN-HGSS-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.hgss-text{
+  font-family: 'PokemonHGSS', sans-serif;
+  font-size: 32px;
+  color: rgb(66, 66, 66);
+  text-shadow: 1.5px 1.5px 0px rgb(181, 181, 181);
+  letter-spacing: -0.5px;
+}
