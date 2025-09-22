@@ -11,16 +11,21 @@
   </div>
 
   <div class="map-container" [class.active]="overlayActive">
-    <button (click)="overlayActive = !overlayActive" class="toggle-overlay-btn">
+    <button (click)="overlayActive = !overlayActive" class="hgss-text hgss-text-button toggle-overlay-btn">
       {{ overlayActive ? 'Hide Map' : 'Show Map' }}
     </button>
 
     <div class="map-inner">
       @if(!madeGuess){
-        <button class="make-guess-btn pixel-corners hgss-text hgss-text-button" (click)="makeGuess()" [disabled]="!overlayActive">Make Guess</button>
+        <button class="make-guess-btn pixel-corners hgss-text hgss-text-button" (click)="makeGuess()" [disabled]="!overlayActive">
+          Make Guess
+
+        </button>
       }
       @else {
-        <button class="make-guess-btn pixel-corners hgss-text hgss-text-button" (click)="nextRound()" [disabled]="!overlayActive">Next Round</button>
+        <button class="make-guess-btn pixel-corners hgss-text hgss-text-button" (click)="nextRound()" [disabled]="!overlayActive">
+          Next Round
+        </button>
       }
       <img src="assets/johto-kanto-x4.jpg" alt="Game Map" class="map-image" />
         <div class="map-grid" [attr.style]="'--rows:' + rows + '; --cols:' + cols + ';'">
@@ -56,10 +61,9 @@
           <div class="location-card pixel-corners">
 
             <div class="location-info">
-              <h2 class="hgss-text" style="font-size: 32px;">{{ selectedLocation.name }}</h2>
+              <h2 class="hgss-text" style=" color: rgb(255, 255, 255); text-shadow: 1.5px 1.5px 0px rgb(41, 41, 41);">{{ selectedLocation.name }}</h2>
               <div class="location-details">
-                <p class="hgss-text" style="font-size: 18px;">{{ selectedLocation.description }}</p>
-                <!-- <p class="hgss-text" style="font-size: 18px;">row: {{selectedLocation.coordinates.row}} col: {{selectedLocation.coordinates.col}}</p> -->
+                <p class="hgss-text" style="font-size: 18px; color: rgb(255, 255, 255); text-shadow: 1.5px 1.5px 0px rgb(41, 41, 41);">{{ selectedLocation.description }}</p>
               </div>
             </div>
           </div>
