@@ -5,6 +5,7 @@ import { createGameToken, decodeGameToken } from "../utils/tokenUtils";
 import { tokenMiddleware } from "../middleware/tokenMiddleware";
 import { allLocationsUsed, getLocationById, getRandomLocation } from "../models/pokemonModel";
 import { gridDistance } from "../utils/locationUtils";
+import { MakeGuessPayload } from "../../../shared/interfaces"
 
 const router = Router();
 const TOLERANCE_DISTANCE = 1;
@@ -96,7 +97,7 @@ router.post("/make-guess", tokenMiddleware, async(req, res) => {
 
     const updatedToken = createGameToken(payload);
 
-    return res.json({
+    const result: MakeGuessPayload ={
         result: isCorrect ? "correct" : "wrong",
         distance: distance,
         updatedToken: updatedToken,
@@ -104,8 +105,12 @@ router.post("/make-guess", tokenMiddleware, async(req, res) => {
         actualLocation: {
             coordinates: result_location.coordinates,
             name: result_location.name
-        }
-    })
+        },
+        score: payload.score,
+        lives: payload.lives
+    }
+
+    return res.json(result)
 })
 
 router.post("/next-location", tokenMiddleware, async (req, res) => {

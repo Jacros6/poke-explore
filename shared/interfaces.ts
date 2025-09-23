@@ -23,10 +23,18 @@ export interface MakeGuessPayload{
     distance: number,
     updatedToken: string,
     status: GameStatus,
-    actualLocation: ResultLocationData
+    actualLocation: ResultLocationData,
+    lives: number,
+    score: number,
 }
 
 export interface ResultLocationData{
     name: string,
     coordinates: Cell,
 }
+
+export interface GameState{
+    score: number;
+    lives: number;
+}
+

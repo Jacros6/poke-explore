@@ -3,6 +3,13 @@
     <span class="title">Pokeguessr</span>
   </div>
 
+  @if(state){
+    <div style="display: flex; gap: 3em;">
+      <h2 class="hgss-text">Lives: {{state.lives}}</h2>
+      <h2 class="hgss-text">Score: {{state.score}}</h2>
+    </div>
+  }
+
   <nav class="nav">
     <button class="nav-btn">Home</button>
     <button class="nav-btn">Map</button>
