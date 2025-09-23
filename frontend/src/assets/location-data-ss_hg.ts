@@ -1,4 +1,4 @@
-import { Cell } from "../app/routes/home.component";
+import { Cell } from "../../../shared/interfaces";
 
 export const LOCATION_DATA_SS_HG: Record<number, {name: string, description: string, tiles: Cell[]}> = {
     1: {

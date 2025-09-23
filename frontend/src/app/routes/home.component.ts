@@ -1,18 +1,18 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { GAME_MAP } from '../../assets/game-map';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GameService } from '../services/game.service';
 import { LOCATION_DATA_SS_HG } from '../../assets/location-data-ss_hg';
+import { Cell, GameStatus, LocationData, MakeGuessPayload } from "../../../../shared/interfaces";
+import { VictoryComponent } from "./victory/victory.component";
+import { GameOverComponent } from "./game-over/game-over.component";
 
-export interface Cell {
-    row: number;
-    col: number;
-}
+
 
 @Component({
     standalone: true,
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, VictoryComponent, GameOverComponent],
     selector: 'app-home',
     templateUrl: 'home.component.html',
     styleUrl: 'home.component.scss'
@@ -26,11 +26,14 @@ export class HomeComponent implements OnInit {
     selectedCell: Cell = { row: Math.floor(this.rows / 2), col: Math.floor(this.cols/2) };
     highlightedCells: Cell[] = [];
     resultCell: Cell | null = null;
+    resultCellName: string | null = null;
+    resultGuess: "wrong" | "correct" | null = null;
     overlayActive = false;
     madeGuess = false;
     image_url: string | null = null;
     radius: number | null = null;
-    selectedLocation: any;
+    selectedLocation: LocationData | null = null;
+    gameStatus: GameStatus = null;
     
     keyDict = {
         ArrowUp: false,
@@ -58,6 +61,8 @@ export class HomeComponent implements OnInit {
         })
     }
 
+
+
     getNextLocation(){
         const token = localStorage.getItem("poke-explore-token");
         if(!token){
@@ -67,7 +72,6 @@ export class HomeComponent implements OnInit {
         console.log("Fetching next location");
         this.gameService.nextLocation(token).subscribe((res: any) => {
             localStorage.setItem("poke-explore-token", res.token);
-            console.log(res)
             this.image_url = res.image_url;
         })
     }
@@ -129,10 +133,18 @@ export class HomeComponent implements OnInit {
 
         const token = localStorage.getItem("poke-explore-token") as string;
 
-        this.gameService.makeGuess(token, this.selectedCell).subscribe((result: any) => {
+        this.gameService.makeGuess(token, this.selectedCell).subscribe((result: MakeGuessPayload) => {
             console.log(result)
-            this.madeGuess = true;
+
+            this.gameStatus = result.status;
+            if(this.gameStatus){
+                return;
+            }
+
             this.resultCell = result.actualLocation.coordinates;
+            this.resultCellName = result.actualLocation.name;
+            this.resultGuess = result.result;
+            this.madeGuess = true;
             if(!this.resultCell){
                 return;
             }
@@ -159,6 +171,7 @@ export class HomeComponent implements OnInit {
                 }
             }
             console.log(this.highlightedCells)
+            localStorage.setItem("poke-explore-token", result.updatedToken);
         })
     }
 
@@ -197,5 +210,7 @@ export class HomeComponent implements OnInit {
 
         this.updateLocation(this.selectedCell.row, this.selectedCell.col);
     }   
+
+
 }
 

@@ -3,7 +3,7 @@ import { Router } from "express";
 import { randomUUID } from "crypto";
 import { createGameToken, decodeGameToken } from "../utils/tokenUtils";
 import { tokenMiddleware } from "../middleware/tokenMiddleware";
-import { getAllLocationIds, getLocationById, getRandomLocation } from "../models/pokemonModel";
+import { allLocationsUsed, getLocationById, getRandomLocation } from "../models/pokemonModel";
 import { gridDistance } from "../utils/locationUtils";
 
 const router = Router();
@@ -49,6 +49,7 @@ router.post("/start-game", async (req, res) => {
 
 router.post("/make-guess", tokenMiddleware, async(req, res) => {
     const {token, guessed_location} = req.body;
+    console.log("Make a guess")
     if(!token){
         return res.status(400).send("Token required");
     }
@@ -56,6 +57,9 @@ router.post("/make-guess", tokenMiddleware, async(req, res) => {
     const payload = decodeGameToken(token);
     if(!payload.currentRoundId){
         return res.status(400).send("Something went wrong")
+    }
+    if(payload.lives < 0){
+      return res.status(400).send("No more lives remaining");
     }
 
     const result_location = await getLocationById(payload.currentRoundId);
@@ -67,10 +71,7 @@ router.post("/make-guess", tokenMiddleware, async(req, res) => {
         guessed_location.col
     )
 
-
-
     const isCorrect = distance <= TOLERANCE_DISTANCE;
-
     if(isCorrect){
         if(distance == 0){
             payload.score += 2;
@@ -83,12 +84,23 @@ router.post("/make-guess", tokenMiddleware, async(req, res) => {
         payload.lives -= 1;
     }
 
+    let gameStatus: "won" | "lost" | null = null;
+    if (payload.lives <= 0){
+      gameStatus = "lost";
+    }
+    else if (await allLocationsUsed(payload.usedIds)){
+      gameStatus = "won";
+    }
+
+    console.log("Show me my payload", payload)
+
     const updatedToken = createGameToken(payload);
 
     return res.json({
         result: isCorrect ? "correct" : "wrong",
-        distance,
-        updatedToken,
+        distance: distance,
+        updatedToken: updatedToken,
+        status: gameStatus,
         actualLocation: {
             coordinates: result_location.coordinates,
             name: result_location.name
@@ -98,12 +110,16 @@ router.post("/make-guess", tokenMiddleware, async(req, res) => {
 
 router.post("/next-location", tokenMiddleware, async (req, res) => {
   const { token } = req.body;
-
+  
   if (!token) return res.status(400).send("Token required");
 
   let usedIds: number[] = [];
   let payload = decodeGameToken(token);
   usedIds = payload.usedIds;
+
+  if(payload.lives <= 0){
+    return res.status(404).send("No more lives remaining");
+  }
 
   const locations = await getRandomLocation(usedIds);
   if (!locations.length) {

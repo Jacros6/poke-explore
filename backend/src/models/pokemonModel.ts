@@ -28,6 +28,15 @@ export async function getRandomLocation(usedIds: number[]): Promise<any>{
 
 }
 
+export async function allLocationsUsed(usedIds: number[]): Promise<any>{
+  const [rows] = await pool.query("SELECT COUNT(*) AS total FROM hg_ss_locations");
+  const totalLocations = (rows as any)[0].total;
+
+  const uniqueUsed = new Set(usedIds);
+
+  return uniqueUsed.size >= totalLocations;
+}
+
 export async function getLocationById(id: number) {
   const [rows] = await pool.query("SELECT * FROM hg_ss_locations WHERE id = ?", [id]);
   return (rows as any[])[0];
