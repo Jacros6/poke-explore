@@ -13,6 +13,7 @@ import { GameState } from '../../../../shared/interfaces';
 export class HeaderComponent implements OnInit {
 
     state: GameState | null = null;
+    overlayActive: boolean = false;
 
     constructor(private gameService: GameService) { }
 

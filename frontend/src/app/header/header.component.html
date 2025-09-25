@@ -10,9 +10,16 @@
     </div>
   }
 
-  <nav class="nav">
-    <button class="nav-btn">Home</button>
-    <button class="nav-btn">Map</button>
-    <button class="nav-btn">About</button>
-  </nav>
+  <div class="nav">
+    <button (click)="overlayActive = !overlayActive">
+      Toggle Panel
+    </button>
+  </div>
+
+  @if(overlayActive){
+    <div class="backdrop" (click)="overlayActive = false"></div>
+  }
+  <div class="side-panel" [class.active]="overlayActive">
+    ABC
+  </div>
 </header>

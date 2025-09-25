@@ -20,16 +20,16 @@ import { GameOverComponent } from "./game-over/game-over.component";
 
 export class HomeComponent implements OnInit {
 
-    gameMap = GAME_MAP;
-    rows = this.gameMap.length;
-    cols = this.gameMap[0].length;
+    gameMap: number[][] = GAME_MAP;
+    rows: number = this.gameMap.length;
+    cols: number = this.gameMap[0].length;
     selectedCell: Cell = { row: Math.floor(this.rows / 2), col: Math.floor(this.cols/2) };
     highlightedCells: Cell[] = [];
     resultCell: Cell | null = null;
     resultCellName: string | null = null;
     resultGuess: "wrong" | "correct" | null = null;
-    overlayActive = false;
-    madeGuess = false;
+    overlayActive: boolean = false;
+    madeGuess:boolean = false;
     image_url: string | null = null;
     radius: number | null = null;
     selectedLocation: LocationData | null = null;

@@ -22,7 +22,7 @@
   display: flex;
   align-items: center;
   gap: 0.5em;
-
+  padding-left: 2em;
   img {
     height: 40px;
     image-rendering: pixelated;
@@ -39,7 +39,7 @@
 .nav {
   display: flex;
   gap: 1em;
-
+  padding-right: 2em;
   .nav-btn {
     background: #ff3c3c;
     border: 2px solid #fff;
@@ -58,4 +58,31 @@
 
 .header-text{
   font-size: 3em;
+}
+
+.backdrop {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0,0,0,0.3); 
+  z-index: 9;
+  inset: 0;
+}
+
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  min-width: 200px;
+  background: rgb(82, 82, 90);   
+  z-index: 10;
+  transition: transform 420ms cubic-bezier(.22,.9,.32,1), opacity 280ms ease;
+  padding: 2em;
+
+  transform: translateX(100%);
+}
+
+.side-panel.active {
+  transform: translateX(0);
 }
