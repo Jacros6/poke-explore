@@ -34,6 +34,8 @@ export class HomeComponent implements OnInit {
     radius: number | null = null;
     selectedLocation: LocationData | null = null;
     gameStatus: GameStatus = null;
+
+    
     
     keyDict = {
         ArrowUp: false,
