@@ -20,6 +20,8 @@
     <div class="backdrop" (click)="overlayActive = false"></div>
   }
   <div class="side-panel" [class.active]="overlayActive">
-    ABC
+    <div *ngFor="let item of backgroundList">
+      <button style="width: 100%;" (click)="setBackground(item)">{{item.name}}</button>
+    </div>
   </div>
 </header>

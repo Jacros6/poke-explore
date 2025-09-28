@@ -38,3 +38,7 @@ export interface GameState{
     lives: number;
 }
 
+export interface BackgroundData{
+    name: string,
+    url: string
+}
