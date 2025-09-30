@@ -1,7 +1,10 @@
 <app-header></app-header>
 <div>
     <div class="background-wrapper">
-        <img [src]=background?.url alt="Background Image" class="background-img" />
+        @if(background){
+            <img [src]=background alt="Background Image" class="background-img" />
+        }
+        
     </div>
     <router-outlet></router-outlet>
 </div>
